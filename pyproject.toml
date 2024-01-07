@@ -22,6 +22,11 @@ test_sources = [
 ]
 
 requires = [
+    "pandas",
+    "PyQt5",
+    "PyQt6",
+    "matpotlib",
+    "numpy"
 ]
 test_requires = [
     "pytest",

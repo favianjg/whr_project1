@@ -6,7 +6,7 @@ Hier die Antworten zu den Theoriefragen:
 
 """
 import sys
-import pathlib
+from pathlib import Path
 
 PYQTV = None
 
@@ -29,21 +29,21 @@ from appprojekt1.popUpWindow import show_message
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
-        super(MainWindow, self).__init__()
-
         # main window attributes: create class instances (objects) of our custom modules
-        ...
+        super(MainWindow, self).__init__()
+        self.data = None
 
         # get current working directory
-        ...
+        current_wd = Path.cwd().as_posix()
+        self.main_window = uic.loadUi(str(current_wd)+'/appprojekt1/resources/window.ui', self)
+        self.hp_file_loc = str(current_wd)+'/appprojekt1/resources/happiness.csv'
 
         # load the GUI file from QtDesigner
         ...
 
         # call the UI button handler
-        ...
         # display the GUI
-        ...
+        self.show()
 
     def button_handler(self):
         """
@@ -56,7 +56,8 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Wrapper for the open data method in file handler.
         """
-        ...
+        filehandler = files.FileHandler()
+        self.data = filehandler.open_file(file_path=self.hp_file_loc)
 
     def export_data(self):
         """
@@ -95,14 +96,24 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Window that pops up when the red x in the corner is clicked.
         """
-        ...
+        reply = QMessageBox.question(self, 'Nachricht',
+                                     'Sind Sie sicher, dass Sie beenden möchten?',
+                                     QMessageBox.Yes | QMessageBox.No)
+
+        self.when_closing(reply, event)
 
     def when_closing(self, reply, event):
         """
         Is called when the app is closed.
         """
-        ...
-
+        if reply == QMessageBox.Yes:
+            print('App schließt jetzt ab')
+            show_message('App schließt jetzt ab')
+            event.accept()
+        else:
+            print('Abgebrochen')
+            show_message('Abgebrochen')
+            event.ignore()
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

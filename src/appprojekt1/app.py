@@ -35,13 +35,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.data = None
         self.filename = None
         self.filehandler = files.FileHandler()
+        self.fileDialog = FileDialog()
         self.tableWidget = TableWidget()
 
         # get current working directory
-        current_wd = Path.cwd().as_posix()
+        self.current_wd = Path.cwd().as_posix()
 
         # load the GUI file from QtDesigner
-        self.main_window = uic.loadUi(str(current_wd)+'/appprojekt1/resources/window.ui', self)
+        self.main_window = uic.loadUi(str(self.current_wd)+'/appprojekt1/resources/window.ui', self)
+        if self.filename is None:
+            self.main_window.lblFileName.setText("noch kein File ausgewählt")
+        self.button_handler()
 
         # call the UI button handler
 
@@ -53,8 +57,8 @@ class MainWindow(QtWidgets.QMainWindow):
         Handles all the UI button callbacks
         means: which function is called for which button press.
         """
-        self.main_window.btnPlotData.clicked.connect(self.visualize_data)
         self.main_window.btnOpenFile.clicked.connect(self.open_data)
+        self.main_window.btnPlotData.clicked.connect(self.visualize_data)
         self.main_window.btnExportFile.clicked.connect(self.export_data)
         self.main_window.btnShowStatistics.clicked.connect(self.show_statistics)
         self.main_window.btnShowCorrelations.clicked.connect(self.show_correlation_matrix)
@@ -65,7 +69,11 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Wrapper for the open data method in file handler.
         """
-        ...
+        self.filename = self.fileDialog.open_file_name_dialog()
+        if self.filename is not None:
+            self.main_window.lblFileName.setText(self.filename)
+        self.data = self.filehandler.open_file(self.filename)
+        print(self.data)
 
     def export_data(self):
         """
@@ -78,7 +86,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Call the open_data() method and creates a plot.
         """
-        ...
+        print("test123")
 
     def show_statistics(self):
         """
@@ -116,11 +124,9 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         if reply == QMessageBox.Yes:
             print('App schließt jetzt ab')
-            show_message('App schließt jetzt ab')
             event.accept()
         else:
             print('Abgebrochen')
-            show_message('Abgebrochen')
             event.ignore()
 
 

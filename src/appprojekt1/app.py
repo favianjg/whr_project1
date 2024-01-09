@@ -125,7 +125,11 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         if self.data is not None:
             pd.set_option('display.precision', 3)
-            self.tableStatistics.display_data(df=self.data.describe())
+            statistics = self.data.describe()
+            # set the "names" of the rows of the dataFrame as the title in the table
+            self.tableStatistics.display_data(df=statistics)
+            if isinstance(statistics.index[0], str):
+                self.tableStatistics.setVerticalHeaderLabels(statistics.index)
 
     def show_correlation_matrix(self):
         """

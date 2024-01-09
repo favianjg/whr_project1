@@ -26,6 +26,7 @@ import appprojekt1.filehandling as files
 from appprojekt1.fileDialog import FileDialog
 from appprojekt1.popUpWindow import show_message
 from appprojekt1.tablewidget import TableWidget
+from appprojekt1.mplwidget import MplWidget
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -37,6 +38,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.filehandler = files.FileHandler()
         self.fileDialog = FileDialog()
         self.tableWidget = TableWidget()
+        self.mlpWidget = MplWidget()
 
         # get current working directory
         self.current_wd = Path.cwd().as_posix()
@@ -72,8 +74,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.filename = self.fileDialog.open_file_name_dialog()
         if self.filename is not None:
             self.main_window.lblFileName.setText(self.filename)
-        self.data = self.filehandler.open_file(self.filename)
-        print(self.data)
+            self.data = self.filehandler.open_file(self.filename)
 
     def export_data(self):
         """
@@ -86,7 +87,17 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Call the open_data() method and creates a plot.
         """
-        print("test123")
+        if self.data is None:
+            show_message("Kein File ausgewählt. Öffnen Sie bitte erst ein CSV File")
+        else:
+            self.mlpWidget.scatter_plot(
+                x=self.data['Family'], y=self.data['Happiness Score'],
+                x_label='Family', y_label='Happiness Score', title='Interesting'
+            )
+            self.rbScatterPlot.setChecked(True)
+            self.mlpWidget.setParent(self.widgetMLPParent)
+            self.widgetMLPParent.adjustSize()
+            self.mlpWidget.show()
 
     def show_statistics(self):
         """

@@ -133,7 +133,9 @@ class MainWindow(QtWidgets.QMainWindow):
         and displays it in a custom tableWidget.
         """
         if self.data is not None:
-            correlations = self.data.corr(method='pearson', numeric_only=True)
+            irrelevant_columns = ['Country', 'Region', 'Happiness Rank', 'Standard Error']
+            self.data.drop(columns=irrelevant_columns)
+            correlations = self.data.corr(method='pearson', numeric_only=True).round(1)
             self.tableCorrelations.display_data(
                 df=correlations
             )
@@ -145,7 +147,10 @@ class MainWindow(QtWidgets.QMainWindow):
         if len(self.tableData.get_selected_columns()) < 1:
             show_message("Sie müssen mindestens 1 Spalte auswählen. Bitte korrigieren Sie ihre Eingabe")
         else:
-            self.tableWidget.delete_columns()
+            self.selected_columns = [
+                self.data.columns[columns_index] for columns_index in self.tableData.get_selected_columns()
+            ]
+            self.tableWidget.delete_columns(self.selected_columns)
 
     def clear_all(self):
         """

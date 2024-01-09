@@ -65,13 +65,10 @@ class TableWidget(QTableWidget):
 
         self.df.iloc[row, column] = text
 
-    def delete_columns(self):
+    def delete_columns(self, selected_columns):
         """
         Deletes the currently selected columns from the DataFrame object.
         """
-        selected_columns = [
-            self.df.columns[columns_index] for columns_index in self.get_selected_columns()
-        ]
         self.df.drop(columns=selected_columns)
 
     def clear(self):

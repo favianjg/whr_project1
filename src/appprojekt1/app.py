@@ -34,6 +34,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__()
         self.data = None
         self.filename = None
+        self.modifiedFileName = None
         self.selected_columns = []
         self.filehandler = files.FileHandler()
         self.fileDialog = FileDialog()
@@ -84,7 +85,11 @@ class MainWindow(QtWidgets.QMainWindow):
         Wrapper for the save file method in FileHandler. Takes the file path and
         adds "_modified" to the filename and saves the DataFrame object to this .csv.
         """
-        ...
+        self.modifiedFileName = self.fileDialog.save_file_dialog()
+        if self.modifiedFileName and self.modifiedFileName != self.filename and self.data:
+            self.filehandler.save_file(file_path=self.modifiedFileName)
+        else:
+            show_message("Die Datei wurde nicht gespeichert. Bitte prüfen Sie ihre Eingabe")
 
     def visualize_data(self):
         """

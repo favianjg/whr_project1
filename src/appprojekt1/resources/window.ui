@@ -14,27 +14,22 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="btnPlotData">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>0</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Plot Data</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnOpenFile">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>0</y>
+      <x>130</x>
+      <y>10</y>
       <width>91</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(0, 170, 255);
+ border: 1px solid black;
+border-radius: 10px</string>
     </property>
     <property name="text">
      <string>Open File</string>
@@ -49,6 +44,11 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(234, 156, 0);
+ border: 1px solid black;
+border-radius: 10px</string>
+    </property>
     <property name="text">
      <string>Show Statistics</string>
     </property>
@@ -62,44 +62,28 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(234, 156, 0);
+ border: 1px solid black;
+border-radius: 10px</string>
+    </property>
     <property name="text">
      <string>Show Correlations</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnExportFile">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>0</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Export File</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnDeleteColumns">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>0</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Delete Columns</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnClear">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>0</y>
+      <x>530</x>
+      <y>10</y>
       <width>81</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(255, 46, 74);
+ border: 1px solid black;
+border-radius: 10px</string>
     </property>
     <property name="text">
      <string>Clear</string>
@@ -109,9 +93,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>50</y>
+      <y>60</y>
       <width>681</width>
-      <height>561</height>
+      <height>551</height>
      </rect>
     </property>
    </widget>
@@ -191,20 +175,23 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>0</y>
-      <width>101</width>
+      <y>10</y>
+      <width>121</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>14</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="text">
      <string>Data Table</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="lblTableCorrelation">
@@ -258,6 +245,60 @@
       <width>541</width>
       <height>451</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnExportFile">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>10</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(0, 170, 255);
+ border: 1px solid black;
+border-radius: 10px</string>
+    </property>
+    <property name="text">
+     <string>Export File</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnDeleteColumns">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>10</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(255, 46, 74);
+ border: 1px solid black;
+border-radius: 10px</string>
+    </property>
+    <property name="text">
+     <string>Delete Columns</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnPlotData">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>10</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(0, 255, 127);
+ border: 1px solid black;
+border-radius: 10px</string>
+    </property>
+    <property name="text">
+     <string>Plot Data</string>
     </property>
    </widget>
   </widget>

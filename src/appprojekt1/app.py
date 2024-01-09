@@ -137,7 +137,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Wrapper for deleting columns, check if requirements are met
         """
-        if len(self.tableData.get_selected_columns()) <= 0:
+        if len(self.tableData.get_selected_columns()) < 1:
             show_message("Sie müssen mindestens 1 Spalte auswählen. Bitte korrigieren Sie ihre Eingabe")
         else:
             self.tableWidget.delete_columns()

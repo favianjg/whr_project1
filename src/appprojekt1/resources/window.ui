@@ -115,7 +115,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tableStatistics">
+   <widget class="TableWidget" name="tableStatistics">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -125,7 +125,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tableCorrelations">
+   <widget class="TableWidget" name="tableCorrelations">
     <property name="geometry">
      <rect>
       <x>700</x>

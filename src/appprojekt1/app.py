@@ -6,6 +6,7 @@ Hier die Antworten zu den Theoriefragen:
 
 """
 import sys
+import pandas as pd
 from pathlib import Path
 
 PYQTV = None
@@ -33,6 +34,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__()
         self.data = None
         self.filename = None
+        self.selected_columns = []
         self.filehandler = files.FileHandler()
         self.fileDialog = FileDialog()
 
@@ -71,7 +73,9 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.filename is not None:
             self.main_window.lblFileName.setText(self.filename)
             self.data = self.filehandler.open_file(self.filename)
-        self.tableData.display_data(df=self.data)
+
+        if self.data is not None:
+            self.tableData.display_data(df=self.data)
 
     def export_data(self):
         """
@@ -87,26 +91,39 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.data is None:
             show_message("Kein File ausgewählt. Öffnen Sie bitte erst ein CSV File")
         else:
-            self.mplWidget.scatter_plot(
-                x=self.data['Family'], y=self.data['Happiness Score'],
-                x_label='Family', y_label='Happiness Score', title='Interesting'
-            )
-            self.rbScatterPlot.setChecked(True)
-            self.mplWidget.show()
+            self.selected_columns = [
+                self.data.columns[columns_index] for columns_index in self.tableData.get_selected_columns()
+            ]
+            if len(self.selected_columns) != 2:
+                show_message("Sie müssen genau 2 Spalten auswählen. Bitte korrigieren Sie ihre Auswahl")
+            else:
+                self.mplWidget.scatter_plot(
+                    x=self.data[self.selected_columns[0]], y=self.data[self.selected_columns[1]],
+                    x_label=self.selected_columns[0], y_label=self.selected_columns[1], title='Interesting'
+                )
+                self.rbScatterPlot.setChecked(True)
+                self.mplWidget.show()
 
     def show_statistics(self):
         """
         Calculates the statistic values of the loaded data set and plots them
         to another table.
         """
-        ...
+        if self.data is not None:
+            pd.set_option('display.precision', 3)
+            self.tableStatistics.display_data(df=self.data.describe())
 
     def show_correlation_matrix(self):
         """
         Computes the correlation matrix for a DataFrame object
         and displays it in a custom tableWidget.
         """
-        ...
+        if self.data is not None:
+            correlations = self.data.corr(method='pearson')
+            correlations.style.background_gradient(cmap='viridis').set_precision(2)
+            self.tableCorrelations.display_data(
+                df=correlations
+            )
 
     def clear_all(self):
         """

@@ -25,6 +25,9 @@ class TableWidget(QTableWidget):
 
         # set the "names" of the columns of the dataFrame as the title in the table
         self.setHorizontalHeaderLabels(self.df.columns)
+        # set the "names" of the rows of the dataFrame as the title in the table
+        if isinstance(self.df.index[0], str):
+            self.setVerticalHeaderLabels(self.df.index)
         # set selection mode to column selection
         self.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectColumns)
         # allow multiple columns to be selected

@@ -59,7 +59,23 @@ class MplWidget(QtWidgets.QWidget):
         Plots the given data x over data y as line plot. The graph is set up accordingly.
         """
         # hier den Code für einen Line-Plot. In app.py dann eine der beiden Methoden hier auswählen
-        ...
+        self.canvas.ax.clear()
+
+        coef = np.polyfit(x, y, 1)
+        poly1d_fn = np.poly1d(coef)
+        # plot x data over y data
+        self.canvas.ax.plot(x, poly1d_fn(x), c='C1')
+
+        # set title and axis labels
+        self.canvas.ax.set_title(title, fontsize=25)
+        self.canvas.ax.set_xlabel(x_label, fontsize=20)
+        self.canvas.ax.set_ylabel(y_label, fontsize=20)
+
+        # enable grid
+        self.canvas.ax.grid(True)
+
+        # show the plot (like plt.show())
+        self.canvas.draw()
 
     def clear(self):
         """

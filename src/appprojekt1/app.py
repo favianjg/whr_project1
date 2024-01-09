@@ -59,6 +59,8 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         self.main_window.btnOpenFile.clicked.connect(self.open_data)
         self.main_window.btnPlotData.clicked.connect(self.visualize_data)
+        self.main_window.rbScatterPlot.clicked.connect(self.visualize_data)
+        self.main_window.rbLinePlot.clicked.connect(self.visualize_data)
         self.main_window.btnExportFile.clicked.connect(self.export_data)
         self.main_window.btnShowStatistics.clicked.connect(self.show_statistics)
         self.main_window.btnShowCorrelations.clicked.connect(self.show_correlation_matrix)
@@ -97,11 +99,17 @@ class MainWindow(QtWidgets.QMainWindow):
             if len(self.selected_columns) != 2:
                 show_message("Sie müssen genau 2 Spalten auswählen. Bitte korrigieren Sie ihre Auswahl")
             else:
-                self.mplWidget.scatter_plot(
-                    x=self.data[self.selected_columns[0]], y=self.data[self.selected_columns[1]],
-                    x_label=self.selected_columns[0], y_label=self.selected_columns[1], title='Interesting'
-                )
-                self.rbScatterPlot.setChecked(True)
+                if self.main_window.rbLinePlot.isChecked():
+                    self.mplWidget.line_plot(
+                        x=self.data[self.selected_columns[0]], y=self.data[self.selected_columns[1]],
+                        x_label=self.selected_columns[0], y_label=self.selected_columns[1], title='Interesting'
+                    )
+                else:
+                    self.mplWidget.scatter_plot(
+                        x=self.data[self.selected_columns[0]], y=self.data[self.selected_columns[1]],
+                        x_label=self.selected_columns[0], y_label=self.selected_columns[1], title='Interesting'
+                    )
+                    self.main_window.rbScatterPlot.setChecked(True)
                 self.mplWidget.show()
 
     def show_statistics(self):
@@ -119,8 +127,7 @@ class MainWindow(QtWidgets.QMainWindow):
         and displays it in a custom tableWidget.
         """
         if self.data is not None:
-            correlations = self.data.corr(method='pearson')
-            correlations.style.background_gradient(cmap='viridis').set_precision(2)
+            correlations = self.data.corr(method='pearson', numeric_only=True)
             self.tableCorrelations.display_data(
                 df=correlations
             )

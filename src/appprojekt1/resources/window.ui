@@ -57,7 +57,7 @@
     <property name="geometry">
      <rect>
       <x>850</x>
-      <y>500</y>
+      <y>520</y>
       <width>141</width>
       <height>31</height>
      </rect>
@@ -129,9 +129,9 @@
     <property name="geometry">
      <rect>
       <x>700</x>
-      <y>540</y>
+      <y>560</y>
       <width>551</width>
-      <height>311</height>
+      <height>291</height>
      </rect>
     </property>
    </widget>
@@ -211,7 +211,7 @@
     <property name="geometry">
      <rect>
       <x>700</x>
-      <y>500</y>
+      <y>520</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -248,6 +248,16 @@
     </property>
     <property name="text">
      <string>Statistics Table</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="widgetMLPParent" native="true">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>60</y>
+      <width>541</width>
+      <height>451</height>
+     </rect>
     </property>
    </widget>
   </widget>

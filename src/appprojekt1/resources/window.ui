@@ -13,14 +13,162 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="btnPlotData">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>790</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Plot Data</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnOpenFile">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>790</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Open File</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnShowStatistics">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>790</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Show Statistics</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnShowCorrelations">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>790</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Show Correlations</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnExportFile">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>790</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Export File</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnDeleteColumns">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>790</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Delete Columns</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnClear">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>790</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableData">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>691</width>
+      <height>591</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableStatistics">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>590</y>
+      <width>691</width>
+      <height>192</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="tableCorrelations">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>470</y>
+      <width>561</width>
+      <height>311</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rbScatterPlot">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>0</y>
+      <width>82</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Scatter Plot</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rbLinePlot">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>0</y>
+      <width>82</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Line Plot</string>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>1258</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

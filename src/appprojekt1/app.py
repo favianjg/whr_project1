@@ -137,7 +137,12 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Clears the UI tables and the graph
         """
-        ...
+        self.main_window.rbLinePlot.setChecked(False)
+        self.main_window.rbScatterPlot.setChecked(False)
+        self.tableData.clear()
+        self.tableStatistics.clear()
+        self.tableCorrelations.clear()
+        self.mplWidget.clear()
 
     def closeEvent(self, event):
         """

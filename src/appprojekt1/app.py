@@ -64,7 +64,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.main_window.btnExportFile.clicked.connect(self.export_data)
         self.main_window.btnShowStatistics.clicked.connect(self.show_statistics)
         self.main_window.btnShowCorrelations.clicked.connect(self.show_correlation_matrix)
-        # self.main_window.btnDeleteColumns.clicked.connect(self.tableWidget.delete_columns)
+        self.main_window.btnDeleteColumns.clicked.connect(self.delete_columns)
         self.main_window.btnClear.clicked.connect(self.clear_all)
 
     def open_data(self):
@@ -132,6 +132,15 @@ class MainWindow(QtWidgets.QMainWindow):
             self.tableCorrelations.display_data(
                 df=correlations
             )
+
+    def delete_columns(self):
+        """
+        Wrapper for deleting columns, check if requirements are met
+        """
+        if len(self.tableData.get_selected_columns()) <= 0:
+            show_message("Sie müssen mindestens 1 Spalte auswählen. Bitte korrigieren Sie ihre Eingabe")
+        else:
+            self.tableWidget.delete_columns()
 
     def clear_all(self):
         """

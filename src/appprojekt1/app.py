@@ -25,6 +25,7 @@ except ModuleNotFoundError:
 import appprojekt1.filehandling as files
 from appprojekt1.fileDialog import FileDialog
 from appprojekt1.popUpWindow import show_message
+from appprojekt1.tablewidget import TableWidget
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -32,16 +33,18 @@ class MainWindow(QtWidgets.QMainWindow):
         # main window attributes: create class instances (objects) of our custom modules
         super(MainWindow, self).__init__()
         self.data = None
+        self.filename = None
+        self.filehandler = files.FileHandler()
+        self.tableWidget = TableWidget()
 
         # get current working directory
         current_wd = Path.cwd().as_posix()
-        self.main_window = uic.loadUi(str(current_wd)+'/appprojekt1/resources/window.ui', self)
-        self.hp_file_loc = str(current_wd)+'/appprojekt1/resources/happiness.csv'
 
         # load the GUI file from QtDesigner
-        ...
+        self.main_window = uic.loadUi(str(current_wd)+'/appprojekt1/resources/window.ui', self)
 
         # call the UI button handler
+
         # display the GUI
         self.show()
 
@@ -50,14 +53,19 @@ class MainWindow(QtWidgets.QMainWindow):
         Handles all the UI button callbacks
         means: which function is called for which button press.
         """
-        ...
+        self.main_window.btnPlotData.clicked.connect(self.visualize_data)
+        self.main_window.btnOpenFile.clicked.connect(self.open_data)
+        self.main_window.btnExportFile.clicked.connect(self.export_data)
+        self.main_window.btnShowStatistics.clicked.connect(self.show_statistics)
+        self.main_window.btnShowCorrelations.clicked.connect(self.show_correlation_matrix)
+        # self.main_window.btnDeleteColumns.clicked.connect(self.tableWidget.delete_columns)
+        self.main_window.btnClear.clicked.connect(self.clear_all)
 
     def open_data(self):
         """
         Wrapper for the open data method in file handler.
         """
-        filehandler = files.FileHandler()
-        self.data = filehandler.open_file(file_path=self.hp_file_loc)
+        ...
 
     def export_data(self):
         """
@@ -114,6 +122,7 @@ class MainWindow(QtWidgets.QMainWindow):
             print('Abgebrochen')
             show_message('Abgebrochen')
             event.ignore()
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

@@ -99,11 +99,12 @@ class MainWindow(QtWidgets.QMainWindow):
             if len(self.selected_columns) != 2:
                 show_message("Sie müssen genau 2 Spalten auswählen. Bitte korrigieren Sie ihre Auswahl")
             else:
-                if self.main_window.rbLinePlot.isChecked():
+                if self.main_window.rbScatterPlot.isChecked():
                     self.mplWidget.line_plot(
                         x=self.data[self.selected_columns[0]], y=self.data[self.selected_columns[1]],
                         x_label=self.selected_columns[0], y_label=self.selected_columns[1], title='Interesting'
                     )
+                    self.main_window.rbLinePlot.setChecked(True)
                 else:
                     self.mplWidget.scatter_plot(
                         x=self.data[self.selected_columns[0]], y=self.data[self.selected_columns[1]],

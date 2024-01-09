@@ -46,9 +46,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.main_window = uic.loadUi(str(self.current_wd)+'/appprojekt1/resources/window.ui', self)
         if self.filename is None:
             self.main_window.lblFileName.setText("noch kein File ausgewählt")
-        self.button_handler()
 
         # call the UI button handler
+        self.button_handler()
 
         # display the GUI
         self.show()

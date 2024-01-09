@@ -151,6 +151,10 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Clears the UI tables and the graph
         """
+        self.data = None
+        self.filename = None
+        self.modifiedFileName = None
+        self.selected_columns = []
         self.main_window.rbLinePlot.setChecked(False)
         self.main_window.rbScatterPlot.setChecked(False)
         self.tableData.clear()

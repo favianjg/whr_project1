@@ -105,7 +105,7 @@
      <string>Clear</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tableData">
+   <widget class="TableWidget" name="tableData">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -250,7 +250,7 @@
      <string>Statistics Table</string>
     </property>
    </widget>
-   <widget class="QWidget" name="widgetMLPParent" native="true">
+   <widget class="MplWidget" name="mplWidget" native="true">
     <property name="geometry">
      <rect>
       <x>700</x>
@@ -263,6 +263,19 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>tablewidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MplWidget</class>
+   <extends>QWidget</extends>
+   <header>mplwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

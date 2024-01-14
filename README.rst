@@ -5,7 +5,8 @@ App Projekt 1
 `The BeeWare Project`_. **If you want to see more tools like Briefcase, please
 consider** `becoming a financial member of BeeWare`_.
 
-My first application
+Uni Aalen Project for PyQt Application.
+Made for the final comp sci project
 
 .. _`Briefcase`: https://briefcase.readthedocs.io/
 .. _`The BeeWare Project`: https://beeware.org/

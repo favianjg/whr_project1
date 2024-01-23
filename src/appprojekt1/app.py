@@ -32,6 +32,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         # main window attributes: create class instances (objects) of our custom modules
         super(MainWindow, self).__init__()
+        # intialisiert den Anfangszustand der Variable
         self.data = None
         self.filename = None
         self.modifiedFileName = None
@@ -43,7 +44,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.current_wd = Path.cwd().as_posix()
 
         # load the GUI file from QtDesigner
+        # das Design wurde im QtDesigner erstellt und hier geladen
         self.main_window = uic.loadUi(str(self.current_wd)+'/appprojekt1/resources/window.ui', self)
+        # am Anfang ist noch keine Datei ausgewählt
         if self.filename is None:
             self.main_window.lblFileName.setText("noch kein File ausgewählt")
 
@@ -72,11 +75,15 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Wrapper for the open data method in file handler.
         """
+        # nutzt den fileDialog Widget um den Nutzer nach dem File nachzufragen
         self.filename = self.fileDialog.open_file_name_dialog()
+        # wenn der User eine Datei ausgewählt hat, mach den Inhalt der Datei mit Hilfe des Filehandlers auf
+        # und überschreibt den Label mit dem Dateinamen
         if self.filename is not None:
-            self.main_window.lblFileName.setText(self.filename)
             self.data = self.filehandler.open_file(self.filename)
+            self.main_window.lblFileName.setText(self.filename)
 
+        # wenn der Inhalt vorhanden ist, stellt er in der Tabelle dar
         if self.data is not None:
             self.tableData.display_data(df=self.data)
 
@@ -85,25 +92,33 @@ class MainWindow(QtWidgets.QMainWindow):
         Wrapper for the save file method in FileHandler. Takes the file path and
         adds "_modified" to the filename and saves the DataFrame object to this .csv.
         """
+        # den User nach einem neuen Dateinamen nachfragen
         self.modifiedFileName = self.fileDialog.save_file_dialog()
+        # wenn der User einen neuen Namen eingibt, und der Inhalt nicht leer ist, speichere die Datei
         if self.modifiedFileName and self.modifiedFileName != self.filename and self.data:
             self.filehandler.save_file(file_path=self.modifiedFileName)
         else:
+            # wenn nicht, wirf einen Fehler zurück
             show_message("Die Datei wurde nicht gespeichert. Bitte prüfen Sie ihre Eingabe")
 
     def visualize_data(self):
         """
         Call the open_data() method and creates a plot.
         """
+        # Prüf ob einen Datei-Inhalt vorhanden ist, wenn nicht wirf einen Fehler
         if self.data is None:
             show_message("Kein File ausgewählt. Öffnen Sie bitte erst ein CSV File")
         else:
+            # wenn der Datei-Inhalt geladen wurde, prüf welche Spalte wurden ausgewählt
+            # mit Hilfe der "get_selected_columns" Funktion in TableWidget
             self.selected_columns = [
                 self.data.columns[columns_index] for columns_index in self.tableData.get_selected_columns()
             ]
+            # prüf ob genau 2 Spalten ausgewählt wurden
             if len(self.selected_columns) != 2:
                 show_message("Sie müssen genau 2 Spalten auswählen. Bitte korrigieren Sie ihre Auswahl")
             else:
+                # Prüf ob der Scatterbutton aktiviert worden ist, wenn ja dann stellt es auf ein Line-Plot um
                 if self.main_window.rbScatterPlot.isChecked():
                     self.mplWidget.line_plot(
                         x=self.data[self.selected_columns[0]], y=self.data[self.selected_columns[1]],
@@ -111,6 +126,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     )
                     self.main_window.rbLinePlot.setChecked(True)
                 else:
+                    # sonst stellt eine ScatterPlot dar
                     self.mplWidget.scatter_plot(
                         x=self.data[self.selected_columns[0]], y=self.data[self.selected_columns[1]],
                         x_label=self.selected_columns[0], y_label=self.selected_columns[1], title='Interesting'
@@ -124,10 +140,12 @@ class MainWindow(QtWidgets.QMainWindow):
         to another table.
         """
         if self.data is not None:
+            # setzt die Pandaseinstellung um die Statistiken darzustellen
             pd.set_option('display.precision', 3)
             statistics = self.data.describe()
             # set the "names" of the rows of the dataFrame as the title in the table
             self.tableStatistics.display_data(df=statistics)
+            # prüf ob der Name der Reihe eine String ist, wenn ja setzt das als der Label der Reihe
             if isinstance(statistics.index[0], str):
                 self.tableStatistics.setVerticalHeaderLabels(statistics.index)
 
@@ -137,8 +155,11 @@ class MainWindow(QtWidgets.QMainWindow):
         and displays it in a custom tableWidget.
         """
         if self.data is not None:
+            # Filtert die nicht revelante Spalte raus
             irrelevant_columns = ['Country', 'Region', 'Happiness Rank', 'Standard Error']
+            # Lösch die nicht relevante Spalte aus dem Datei-Inhalt
             self.data.drop(columns=irrelevant_columns)
+            # stell die Korrelation Tabelle dar
             correlations = self.data.corr(method='pearson', numeric_only=True).round(1)
             self.tableCorrelations.display_data(
                 df=correlations
@@ -148,9 +169,11 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Wrapper for deleting columns, check if requirements are met
         """
+        # Prüf ob der User mindestens 1 Spalte der Tabelle gewählt hat
         if len(self.tableData.get_selected_columns()) < 1:
             show_message("Sie müssen mindestens 1 Spalte auswählen. Bitte korrigieren Sie ihre Eingabe")
         else:
+            # Lösch die Spalte aus der Tabelle
             self.selected_columns = [
                 self.data.columns[columns_index] for columns_index in self.tableData.get_selected_columns()
             ]
@@ -160,6 +183,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Clears the UI tables and the graph
         """
+        # setzt alle benutzten Variablen wieder zurück
         self.data = None
         self.filename = None
         self.modifiedFileName = None
@@ -175,6 +199,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Window that pops up when the red x in the corner is clicked.
         """
+        # Öffne ein Fenster beim Schließen um den User nochmal wegen dem Beenden nachzufragen
         reply = QMessageBox.question(self, 'Nachricht',
                                      'Sind Sie sicher, dass Sie beenden möchten?',
                                      QMessageBox.Yes | QMessageBox.No)
@@ -185,6 +210,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         Is called when the app is closed.
         """
+        # Schließ das App, wenn ja ausgewählt wurde, sonst ignorieren
         if reply == QMessageBox.Yes:
             print('App schließt jetzt ab')
             event.accept()
